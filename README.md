@@ -34,9 +34,7 @@ Another key aspect of the traditional MCTS algorithm lies in encoding the succes
 The leaf selection portion of MCTS entails selecting child nodes successively until a leaf is found. Early versions of MCTS utilize the UCT formula,  which considers the win-loss ratio of each node, due to the algorithm’s origins in solving in board games. We adapted it to the following formula, which is computed for each child node of a given parent node. In the formula below, $c_i$ represents the minimum cost (discussed above) of a particular child node, $C$ is the set of minimum costs of each child node, $n_i$ the number of rollouts taken so far from a particular child node, $N$ the number of rollouts taken so far from the parent node, and $p$ is the exploration parameter which we fixed to be $\sqrt{2}$, but could be varied for performance empirically. 
 
 UCT formula:
-$
-1 - \frac{c - \texttt{min}(C)}{\texttt{max}(C) - \texttt{min}(C)} + p \sqrt{\frac{\ln{N}}{n_i}}
-$
+$1 - \frac{c - \texttt{min}(C)}{\texttt{max}(C) - \texttt{min}(C)} + p \sqrt{\frac{\ln{N}}{n_i}}$
 ## Improvements
 Over the course of the project, we made a number of improvements to our algorithm to improve both space and time efficiency. We present the major ones here.
 ### Monte Carlo DAG Search
