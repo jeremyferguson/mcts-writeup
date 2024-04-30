@@ -7,9 +7,9 @@ Extracting the minimum-cost expression from an e-graph is a difficult task, and 
 ### E-graph extraction
 E-graph extraction is the task of selecting a DAG forming a complete expression (that is, an assignment of e-classes to e-nodes) from an e-graph such that the total cost of the selected nodes (determined by some cost function mapping nodes to numerical costs) is minimized. Accounting for nodes shared between multiple paths from the root, [the e-graph extraction problem is NP-complete](https://effect.systems/blog/egraph-extraction.html). Existing extraction techniques either a) sacrifice the optimality of the extracted expression, or b) are not guaranteed to terminate:
 
-1. Bottom-up extraction is fast, but uses tree cost instead of DAG cost. This means that the minimum-cost expression may not be extracted in e-graphs with “shared” nodes, and can result in dramatically higher costs in some cases.
-2. Greedy DAG extraction is fast and uses DAG cost to exploit shared structure, but is not guaranteed to find the minimum-cost expression.
-3. Extraction using integer linear programming (ILP) also uses DAG cost and is guaranteed to find the minimum-cost expression, but may not terminate.
+1. **Bottom-up** extraction is fast, but uses tree cost instead of DAG cost. This means that the minimum-cost expression may not be extracted in e-graphs with “shared” nodes, and can result in dramatically higher costs in some cases.
+2. **Greedy DAG** extraction is fast and uses DAG cost to exploit shared structure, but is not guaranteed to find the minimum-cost expression.
+3. Extraction using **integer linear programming (ILP)** also uses DAG cost and is guaranteed to find the minimum-cost expression, but may not terminate.
 
 We aim to “strike a balance” between greedy DAG and ILP by searching for solutions more optimal than greedy DAG extractions, but with guarantees about the termination of the algorithm.
 ### Monte Carlo tree search
@@ -39,7 +39,7 @@ $1 - \frac{c - \texttt{min}(C)}{\texttt{max}(C) - \texttt{min}(C)} + p \sqrt{\fr
 Over the course of the project, we made a number of improvements to our algorithm to improve both space and time efficiency. We present the major ones here.
 ### Monte Carlo DAG Search
 Our original, tree-based search algorithm wastes both space and rollouts due to the fact that some nodes of the decision tree are equal modulo the e-classes to be canonicalized and the e-classes canonicalized so far. The figure below demonstrates the simplest case in which duplicate nodes can appear in the decision tree. 
-![MCTS tree example](mcts-diagram-2.png)
+![MCTS tree example with duplicates](mcts-diagram-2.png)
 To counteract the duplicated effort which results from these cases, we modified our algorithm to explore a decision DAG, rather than a decision tree by merging nodes with equal to visit sets and decided maps. The figure below shows the DAG-ified version of the tree above.
 ![MCTS DAG example](mcts-diagram-3.png)
 ### Warmstarts
